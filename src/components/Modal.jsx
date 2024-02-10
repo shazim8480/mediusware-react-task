@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-const Modal = ({ modalVisible, setModalVisible, data, title }) => {
+const Modal = ({
+  setModalVisible,
+  data,
+  title,
+  handleAllContactsClick,
+  handleUSContactsClick,
+}) => {
   const [showEvenIndices, setShowEvenIndices] = useState(false);
 
   const filteredData = showEvenIndices
@@ -45,29 +51,29 @@ const Modal = ({ modalVisible, setModalVisible, data, title }) => {
           </div>
         </div>
 
-        <div class="form-check mb-3">
+        <div className="form-check mb-3">
           <input
-            class="form-check-input"
+            className="form-check-input"
             type="checkbox"
             value=""
             id="flexCheckChecked"
             checked={showEvenIndices}
             onChange={() => setShowEvenIndices(!showEvenIndices)}
           />
-          <label class="form-check-label" for="flexCheckChecked">
+          <label className="form-check-label" htmlFor="flexCheckChecked">
             Only Even
           </label>
         </div>
         <div className="modal-footer">
           <button
-            // onClick={() => handleOpenModal("all")}
+            onClick={() => handleAllContactsClick()}
             type="button"
             className="btn btn-primary"
           >
             All Contacts
           </button>
           <button
-            // onClick={() => handleOpenModal("US")}
+            onClick={() => handleUSContactsClick()}
             type="button"
             className="btn btn-warning"
           >

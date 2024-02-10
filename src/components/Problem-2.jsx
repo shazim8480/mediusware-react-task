@@ -5,12 +5,23 @@ import { ALL_CONTACTS_URL, US_CONTACTS_URL } from "../constants/url";
 
 const Problem2 = () => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-  const [allContactsModalVisible, setAllContactsModalVisible] = useState(false);
-  const [USContactsModalVisible, setUSContactsModalVisible] = useState(false);
-
-  const { data: contacts } = useSWR(ALL_CONTACTS_URL, fetcher);
+  const { data: allContacts } = useSWR(ALL_CONTACTS_URL, fetcher);
   const { data: USContacts } = useSWR(US_CONTACTS_URL, fetcher);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState(null);
+  const [contactData, setContactData] = useState([]);
+
+  const handleAllContactsClick = () => {
+    setModalTitle("All Contacts");
+    setContactData(allContacts?.results);
+    setModalVisible(true);
+  };
+
+  const handleUSContactsClick = () => {
+    setModalTitle("US Contacts");
+    setContactData(USContacts?.results);
+    setModalVisible(true);
+  };
 
   return (
     <div className="container">
@@ -19,10 +30,7 @@ const Problem2 = () => {
 
         <div className="d-flex justify-content-center gap-3">
           <button
-            onClick={() => {
-              setUSContactsModalVisible(false);
-              setAllContactsModalVisible(true);
-            }}
+            onClick={() => handleAllContactsClick()}
             className="btn btn-lg btn-outline-primary"
             type="button"
           >
@@ -30,29 +38,20 @@ const Problem2 = () => {
           </button>
           <button
             className="btn btn-lg btn-outline-warning"
-            onClick={() => {
-              setAllContactsModalVisible(false);
-              setUSContactsModalVisible(true);
-            }}
+            onClick={() => handleUSContactsClick()}
             type="button"
           >
             US Contacts
           </button>
         </div>
-        {allContactsModalVisible && (
+        {modalVisible && (
           <Modal
-            title={"All Contacts"}
-            data={contacts?.results}
-            modalVisible={allContactsModalVisible}
-            setModalVisible={setAllContactsModalVisible}
-          />
-        )}
-        {USContactsModalVisible && (
-          <Modal
-            title={"US Contacts"}
-            data={USContacts?.results}
-            modalVisible={USContactsModalVisible}
-            setModalVisible={setUSContactsModalVisible}
+            title={modalTitle}
+            data={contactData}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            handleAllContactsClick={handleAllContactsClick}
+            handleUSContactsClick={handleUSContactsClick}
           />
         )}
       </div>
