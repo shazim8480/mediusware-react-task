@@ -31,13 +31,13 @@ const Problem2 = () => {
         <div className="d-flex justify-content-center gap-3">
           <button
             onClick={() => handleAllContactsClick()}
-            className="btn btn-lg btn-outline-primary"
+            className="btn btn-lg btn-primary"
             type="button"
           >
             All Contacts
           </button>
           <button
-            className="btn btn-lg btn-outline-warning"
+            className="btn btn-lg btn-secondary"
             onClick={() => handleUSContactsClick()}
             type="button"
           >
